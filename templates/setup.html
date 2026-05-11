@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="setup-shell">
+  <div class="setup-panel">
+    <h1>Initial Setup</h1>
+    <p>Define your location and the fish you want to track.</p>
+    <form id="setup-form" method="post" enctype="multipart/form-data">
+      <label>
+        Location name
+        <input type="text" name="location_name" required placeholder="e.g. Main Pond" />
+      </label>
+      <label>
+        Location description
+        <textarea name="location_desc" placeholder="Describe the pond or tank"></textarea>
+      </label>
+      <label>
+        Location picture
+        <input type="file" name="location_image" accept="image/*" />
+      </label>
+      <label>
+        Number of fish
+        <input id="fish-count" type="number" name="fish_count" min="1" max="10" value="3" required />
+      </label>
+      <button type="button" class="secondary-btn" id="generate-fish">Generate fish fields</button>
+      <div id="fish-fields" class="fish-fields"></div>
+      <button type="submit" class="primary-btn">Save Setup</button>
+    </form>
+  </div>
+</section>
+<script>
+  const fishFields = document.getElementById("fish-fields");
+  const generateButton = document.getElementById("generate-fish");
+  const fishCountInput = document.getElementById("fish-count");
+
+  function buildFishFields(count) {
+    fishFields.innerHTML = "";
+    for (let i = 1; i <= count; i += 1) {
+      const item = document.createElement("div");
+      item.className = "fish-card form-card";
+      item.innerHTML = `
+        <h2>Fish ${i}</h2>
+        <label>
+          Name
+          <input type="text" name="fish_name_${i}" placeholder="Fish name" />
+        </label>
+        <label>
+          Description
+          <textarea name="fish_desc_${i}" placeholder="Describe this fish"></textarea>
+        </label>
+        <label>
+          Picture
+          <input type="file" name="fish_image_${i}" accept="image/*" />
+        </label>
+      `;
+      fishFields.appendChild(item);
+    }
+  }
+
+  generateButton.addEventListener("click", () => buildFishFields(parseInt(fishCountInput.value, 10) || 1));
+  buildFishFields(parseInt(fishCountInput.value, 10) || 1);
+</script>
+{% endblock %}

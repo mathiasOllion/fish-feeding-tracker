@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="settings-shell">
+  <div class="settings-panel">
+    <h1>Account Settings</h1>
+    <p>Update your username or password.</p>
+    <form method="post">
+      <label>
+        Username
+        <input type="text" name="username" required value="{{ user.username }}" />
+      </label>
+      <label>
+        Current password
+        <input type="password" name="current_password" autocomplete="current-password" />
+      </label>
+      <label>
+        New password
+        <input type="password" name="new_password" autocomplete="new-password" />
+      </label>
+      <label>
+        Confirm new password
+        <input type="password" name="confirm_password" autocomplete="new-password" />
+      </label>
+      <button type="submit" class="primary-btn">Save account</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

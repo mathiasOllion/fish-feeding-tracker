@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="dashboard-shell">
+  <div class="page-header">
+    <div>
+      <h1>{{ location.name }} Dashboard</h1>
+      <p class="subtitle">Food trend per fish over time.</p>
+    </div>
+  </div>
+  <div class="chart-card">
+    <canvas id="foodChart" width="400" height="220"></canvas>
+  </div>
+  <div class="dashboard-note">
+    <p>Use the tracker page to update daily pellets and return here to compare fish progress over time.</p>
+  </div>
+</section>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const ctx = document.getElementById("foodChart").getContext("2d");
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: {{ labels | tojson }},
+        datasets: {{ datasets | tojson }},
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { position: "top" },
+          tooltip: { enabled: true },
+        },
+        scales: {
+          x: { title: { display: true, text: "Date" } },
+          y: { title: { display: true, text: "Pellets eaten" }, beginAtZero: true },
+        },
+      },
+    });
+  });
+</script>
+{% endblock %}

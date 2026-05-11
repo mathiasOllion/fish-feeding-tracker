@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="tracker-shell">
+  <div class="page-header location-header">
+    <img src="{{ location_image }}" alt="{{ location.name }}" class="location-image" />
+    <div>
+      <h1>{{ location.name }}</h1>
+      <p class="subtitle">Track pellets for {{ selected_date }}.</p>
+      <p class="location-description">{{ location.description or 'No location description yet.' }}</p>
+      <div class="date-navigation">
+        <a class="nav-button" href="{{ url_for('tracker', date=prev_date) }}">← Previous</a>
+        <input id="selected-date" type="date" value="{{ selected_date }}" />
+        <a class="nav-button" href="{{ url_for('tracker', date=next_date) }}">Next →</a>
+      </div>
+    </div>
+  </div>
+
+  <form id="tracker-form" class="tracker-form" data-date="{{ selected_date }}">
+    <div class="fish-grid">
+      {% for fish in fishes %}
+      <article class="fish-card" data-fish-id="{{ fish.id }}">
+        <img src="{{ fish.image_url }}" alt="{{ fish.name }}" class="fish-image" />
+        <div class="card-body">
+          <h2>{{ fish.name }}</h2>
+          <p>{{ fish.description or 'No description yet.' }}</p>
+          <div class="counter-row">
+            <button class="circle-btn decrement" type="button">-</button>
+            <input class="counter-input" name="pellets_{{ fish.id }}" type="number" min="0" value="{{ fish.today_count }}" />
+            <button class="circle-btn increment" type="button">+</button>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    <div class="tracker-actions">
+      <button id="save-all-btn" class="primary-btn" type="button">Save all fish counts</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

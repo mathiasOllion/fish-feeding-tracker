@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - tracker-data:/app/data
+    environment:
+      FLASK_APP: app.py
+      FLASK_ENV: production
+      SECRET_KEY: change-me-to-a-secret
+
+volumes:
+  tracker-data:

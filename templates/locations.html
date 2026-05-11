@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="settings-shell">
+  <div class="settings-panel">
+    <h1>Location Management</h1>
+    <p>Update your location name, fish profiles, and pictures.</p>
+    <form method="post" enctype="multipart/form-data">
+      <label>
+        Location name
+        <input type="text" name="location_name" required value="{{ location.name }}" />
+      </label>
+      <label>
+        Location description
+        <textarea name="location_desc">{{ location.description }}</textarea>
+      </label>
+      <label>
+        Location picture
+        <input type="file" name="location_image" accept="image/*" />
+      </label>
+      <input type="hidden" name="new_fish_count" id="new-fish-count" value="0" />
+      <div class="settings-row">
+        <button type="button" id="add-fish-btn" class="secondary-btn">Add fish</button>
+      </div>
+      <div class="fish-fields">
+        {% for fish in fishes %}
+        <div class="fish-card form-card">
+          <h2>{{ fish.name }}</h2>
+          <label>
+            Fish name
+            <input type="text" name="fish_name_{{ fish.id }}" value="{{ fish.name }}" />
+          </label>
+          <label>
+            Description
+            <textarea name="fish_desc_{{ fish.id }}">{{ fish.description }}</textarea>
+          </label>
+          <label>
+            Replace picture
+            <input type="file" name="fish_image_{{ fish.id }}" accept="image/*" />
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+      <template id="new-fish-template">
+        <div class="fish-card form-card new-fish-card">
+          <h2>New fish</h2>
+          <label>
+            Fish name
+            <input type="text" name="fish_name_new_INDEX" placeholder="Fish name" />
+          </label>
+          <label>
+            Description
+            <textarea name="fish_desc_new_INDEX" placeholder="Description"></textarea>
+          </label>
+          <label>
+            Picture
+            <input type="file" name="fish_image_new_INDEX" accept="image/*" />
+          </label>
+          <button type="button" class="secondary-btn remove-fish-btn">Remove fish</button>
+        </div>
+      </template>
+      <button type="submit" class="primary-btn">Update location</button>
+    </form>
+  </div>
+</section>
+{% endblock %}
