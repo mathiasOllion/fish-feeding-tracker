@@ -75,6 +75,42 @@ python app.py
 
 Server will run on `http://localhost:5000`
 
+## Docker Hub Publishing
+
+### Tag the image
+
+```bash
+docker tag fft-app:latest YOUR_DOCKERHUB_USERNAME/fish-feeding-tracker:latest
+```
+
+### Push to Docker Hub
+
+```bash
+docker push YOUR_DOCKERHUB_USERNAME/fish-feeding-tracker:latest
+```
+
+### Run the published image
+
+```bash
+docker run -p 5000:5000 -v tracker-data:/app/data YOUR_DOCKERHUB_USERNAME/fish-feeding-tracker:latest
+```
+
+## GitHub Actions CI/CD
+
+A GitHub Actions workflow is included to build and publish the Docker image on push.
+
+### Add repository secrets
+
+In GitHub, go to Settings > Secrets and variables > Actions and add:
+- `DOCKER_USERNAME`
+- `DOCKER_PASSWORD`
+
+### Workflow behavior
+
+- Builds the Docker image
+- Logs in to Docker Hub
+- Pushes the image to `YOUR_DOCKERHUB_USERNAME/fish-feeding-tracker:latest`
+
 ## Project Structure
 
 ```

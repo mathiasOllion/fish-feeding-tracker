@@ -1,6 +1,8 @@
 services:
   app:
     build: .
+    image: YOUR_DOCKERHUB_USERNAME/fish-feeding-tracker:latest
+    restart: unless-stopped
     ports:
       - "5000:5000"
     volumes:
